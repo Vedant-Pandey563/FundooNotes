@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/Services/" />
+  <Folder Name="/src/Services/NotesService/">
+    <Project Path="src/Services/NotesService/NotesService.API/NotesService.API.csproj" />
+    <Project Path="src/Services/NotesService/NotesService.Application/NotesService.Application.csproj" />
+    <Project Path="src/Services/NotesService/NotesService.Domain/NotesService.Domain.csproj" />
+    <Project Path="src/Services/NotesService/NotesService.Infrastructure/NotesService.Infrastructure.csproj" />
+  </Folder>
+</Solution>
