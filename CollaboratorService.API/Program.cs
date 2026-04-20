@@ -1,26 +1,25 @@
+using System.Text;
+using CollaboratorService.Application.Features.Collaborators.Commands.AddCollaborator;
+using CollaboratorService.Application.Interfaces;
+using CollaboratorService.Infrastructure.Persistence;
+using CollaboratorService.Infrastructure.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using NotesService.Application.Features.Notes.Commands.CreateNote;
-using NotesService.Application.Interfaces;
-//using NotesService.Domain.Configurations;
-using NotesService.Infrastructure.Configurations;
-using NotesService.Infrastructure.Persistence;
-using NotesService.Infrastructure.Repositories;
-using NotesService.Infrastructure.Cache;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Controllers
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
+// Swagger + JWT Authorize button
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "NotesService API",
+        Title = "CollaboratorService API",
         Version = "v1"
     });
 
@@ -31,7 +30,7 @@ builder.Services.AddSwaggerGen(c =>
         Scheme = "bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "Enter your JWT token"
+        Description = "Enter your JWT token here"
     });
 
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -50,21 +49,19 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// MediatR
 builder.Services.AddMediatR(cfg =>
-    cfg.RegisterServicesFromAssembly(typeof(CreateNoteHandler).Assembly));
+    cfg.RegisterServicesFromAssembly(typeof(AddCollaboratorHandler).Assembly));
 
-// Mongo
-var mongoSettings = builder.Configuration
-    .GetSection("MongoSettings")
-    .Get<MongoSettings>()
-    ?? throw new InvalidOperationException("MongoSettings is missing.");
+// SQL connection
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? throw new InvalidOperationException("DefaultConnection is missing.");
 
-builder.Services.AddSingleton(mongoSettings);
-builder.Services.AddSingleton<NotesDbContext>();
-builder.Services.AddScoped<INoteRepository, NoteRepository>();
+builder.Services.AddSingleton(new DbConnectionFactory(connectionString));
+builder.Services.AddScoped<ICollaboratorRepository, CollaboratorRepository>();
 
-// JWT
-var jwtSecret = builder.Configuration["JwtSettings:Secret"]
+// JWT auth
+var secret = builder.Configuration["JwtSettings:Secret"]
     ?? throw new InvalidOperationException("JwtSettings:Secret is missing.");
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -81,15 +78,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
 
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret)),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret)),
             ClockSkew = TimeSpan.Zero
         };
     });
-
-//redis 
-var redisConnection = builder.Configuration["RedisSettings:ConnectionString"]
-    ?? throw new InvalidOperationException("RedisSettings:ConnectionString is missing.");
-builder.Services.AddSingleton<ICacheService>(new RedisService(redisConnection));
 
 builder.Services.AddAuthorization();
 
@@ -100,10 +92,9 @@ app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication();
+app.UseAuthentication();   // CHANGE: must come before authorization
 app.UseAuthorization();
 
-app.MapGet("/", () => Results.Redirect("/swagger"));
-
 app.MapControllers();
+
 app.Run();

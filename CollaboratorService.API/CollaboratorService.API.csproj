@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- MediatR for CQRS handlers -->
+		<PackageReference Include="MediatR" Version="14.1.0" />
+
+		<!-- Swagger -->
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+
+		<!-- CHANGE: needed for JWT authentication in this service -->
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.26" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\CollaboratorService.Application\CollaboratorService.Application.csproj" />
+		<!-- CHANGE: needed so API can use DbConnectionFactory + repository -->
+		<ProjectReference Include="..\CollaboratorService.Infrastructure\CollaboratorService.Infrastructure.csproj" />
+	</ItemGroup>
+
+</Project>

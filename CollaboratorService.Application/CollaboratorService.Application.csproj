@@ -7,12 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="14.1.0" />
-    <PackageReference Include="StackExchange.Redis" Version="2.12.14" />
+    <ProjectReference Include="..\CollaboratorService.Domain\CollaboratorService.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NotesService.Domain\NotesService.Domain.csproj" />
+    <PackageReference Include="MediatR" Version="14.1.0" />
   </ItemGroup>
 
 </Project>

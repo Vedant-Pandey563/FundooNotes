@@ -1,6 +1,12 @@
 <Solution>
   <Folder Name="/src/" />
   <Folder Name="/src/Services/" />
+  <Folder Name="/src/Services/CollaboratorService/">
+    <Project Path="CollaboratorService.API/CollaboratorService.API.csproj" Id="15dbea33-d723-498d-94f9-7edd8cb2c40b" />
+    <Project Path="CollaboratorService.Application/CollaboratorService.Application.csproj" Id="72cba6c8-3161-43c3-b2ff-0ed8ab9b895b" />
+    <Project Path="CollaboratorService.Domain/CollaboratorService.Domain.csproj" Id="f7e2fd97-1897-45ab-a07b-b2bd87a9f4f1" />
+    <Project Path="CollaboratorService.Infrastructure/CollaboratorService.Infrastructure.csproj" Id="378d76ab-c3ad-4d41-8e1a-4bf287091562" />
+  </Folder>
   <Folder Name="/src/Services/NotesService/">
     <Project Path="src/Services/NotesService/NotesService.API/NotesService.API.csproj" />
     <Project Path="src/Services/NotesService/NotesService.Application/NotesService.Application.csproj" />
