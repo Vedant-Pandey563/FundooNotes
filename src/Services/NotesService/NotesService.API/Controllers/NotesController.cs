@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using NotesService.Application.DTOs;
 using NotesService.Application.Features.Notes.Commands.CreateNote;
+using Microsoft.AspNetCore.Authorization;
 
 namespace NotesService.API.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class NotesController : ControllerBase
@@ -23,9 +25,13 @@ public class NotesController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateNote([FromBody] CreateNoteDto dto)
     {
-        // TEMP: hardcoded userId
-        // Later this will come from JWT token
-        int userId = 1;
+        var userIdClaim = User.FindFirst("userId")?.Value;
+
+        if (userIdClaim == null)
+            return Unauthorized();
+
+        // If NotesService expects int:
+        int userId = int.Parse(userIdClaim);
 
         // Send command to handler via MediatR
         var noteId = await _mediator.Send(
@@ -44,7 +50,13 @@ public class NotesController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        int userId = 1;
+        var userIdClaim = User.FindFirst("userId")?.Value;
+
+        if (userIdClaim == null)
+            return Unauthorized();
+
+        // If NotesService expects int:
+        int userId = int.Parse(userIdClaim);
 
         var notes = await _mediator.Send(new GetAllNotesQuery(userId));
 
