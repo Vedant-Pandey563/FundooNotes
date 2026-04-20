@@ -7,4 +7,10 @@
     <Project Path="src/Services/NotesService/NotesService.Domain/NotesService.Domain.csproj" />
     <Project Path="src/Services/NotesService/NotesService.Infrastructure/NotesService.Infrastructure.csproj" />
   </Folder>
+  <Folder Name="/src/Services/UserService/">
+    <Project Path="UserService.API/UserService.API.csproj" Id="4ecb5742-d9bb-4152-ac45-1034d9cc200a" />
+    <Project Path="UserService.Application/UserService.Application.csproj" Id="9f02685a-7fcd-4113-a7a7-e5e7a62ae875" />
+    <Project Path="UserService.Domain/UserService.Domain.csproj" Id="4a56180b-d44b-4051-aac5-08a786f45f40" />
+    <Project Path="UserService.Infrastructure/UserService.Infrastructure.csproj" Id="d9167c50-ccd0-4b7f-a48b-ef5dbc7ccbb8" />
+  </Folder>
 </Solution>
