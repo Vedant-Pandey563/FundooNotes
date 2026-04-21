@@ -7,6 +7,12 @@
     <Project Path="CollaboratorService.Domain/CollaboratorService.Domain.csproj" Id="f7e2fd97-1897-45ab-a07b-b2bd87a9f4f1" />
     <Project Path="CollaboratorService.Infrastructure/CollaboratorService.Infrastructure.csproj" Id="378d76ab-c3ad-4d41-8e1a-4bf287091562" />
   </Folder>
+  <Folder Name="/src/Services/LabelService/">
+    <Project Path="src/Services/LabelService/LabelsService.API/LabelService.API.csproj" Id="aaa3c3c8-4106-41cb-92e3-69d539031a64" />
+    <Project Path="src/Services/LabelService/LabelsService.Application/LabelService.Application.csproj" Id="c6552d1f-2fa6-45ec-88fb-e3add498854f" />
+    <Project Path="src/Services/LabelService/LabelsService.Domain/LabelService.Domain.csproj" Id="ba6c3556-6505-4991-8dbb-0ef2a6603338" />
+    <Project Path="src/Services/LabelService/LabelsService.Infrastructure/LabelService.Infrastructure.csproj" Id="9a8646ee-c5f2-489f-91f1-74c0f6963ef0" />
+  </Folder>
   <Folder Name="/src/Services/NotesService/">
     <Project Path="src/Services/NotesService/NotesService.API/NotesService.API.csproj" />
     <Project Path="src/Services/NotesService/NotesService.Application/NotesService.Application.csproj" />
