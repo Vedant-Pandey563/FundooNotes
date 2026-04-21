@@ -27,6 +27,7 @@
     <Project Path="src/Services/UserService/UserService.Domain/UserService.Domain.csproj" />
     <Project Path="src/Services/UserService/UserService.Infrastructure/UserService.Infrastructure.csproj" />
   </Folder>
+  <Project Path="FundooNotes.Test/FundooNotes.Test.csproj" Id="2a20f59c-2532-4e6b-ab63-55078c62d73a" />
   <Properties Name="ExtensibilityGlobals" Scope="PostLoad">
     <Property Name="FileExplorer" />
   </Properties>
