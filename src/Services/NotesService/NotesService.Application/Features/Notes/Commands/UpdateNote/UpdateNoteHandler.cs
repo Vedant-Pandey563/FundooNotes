@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using NotesService.Application.Interfaces;
 
+namespace NotesService.Application.Features.Notes.Commands.UpdateNote
+{
 public class UpdateNoteHandler : IRequestHandler<UpdateNoteCommand, bool>
 {
     private readonly INoteRepository _repo;
@@ -26,4 +28,5 @@ public class UpdateNoteHandler : IRequestHandler<UpdateNoteCommand, bool>
 
         return true;
     }
+}
 }

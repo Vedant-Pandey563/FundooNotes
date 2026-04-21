@@ -1,24 +1,26 @@
 using System.Text;
+using CollaboratorService.Application.Features.Collaborators.Commands.AddCollaborator;
+using CollaboratorService.Application.Interfaces;
+using CollaboratorService.Infrastructure.Persistence;
+using CollaboratorService.Infrastructure.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using UserService.Application.Features.Auth.Commands.Login;
-using UserService.Application.Features.Auth.Commands.Register;
-using UserService.Application.Interfaces;
-using UserService.Infrastructure.Persistence;
-using UserService.Infrastructure.Repositories;
+using SharedLibrary.Infrastructure.GlobalException;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Controllers
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
+// Swagger + JWT Authorize button
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "UserService API",
+        Title = "CollaboratorService API",
         Version = "v1"
     });
 
@@ -48,15 +50,18 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// MediatR
 builder.Services.AddMediatR(cfg =>
-    cfg.RegisterServicesFromAssembly(typeof(LoginHandler).Assembly));
+    cfg.RegisterServicesFromAssembly(typeof(AddCollaboratorHandler).Assembly));
 
+// SQL connection
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? throw new InvalidOperationException("DefaultConnection is missing.");
 
 builder.Services.AddSingleton(new DbConnectionFactory(connectionString));
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ICollaboratorRepository, CollaboratorRepository>();
 
+// JWT auth
 var secret = builder.Configuration["JwtSettings:Secret"]
     ?? throw new InvalidOperationException("JwtSettings:Secret is missing.");
 
@@ -73,6 +78,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
+
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret)),
             ClockSkew = TimeSpan.Zero
         };
@@ -82,12 +88,14 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
+app.UseGlobalExceptionMiddleware();
+
 app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication();
+app.UseAuthentication();   // CHANGE: must come before authorization
 app.UseAuthorization();
 
 app.MapControllers();

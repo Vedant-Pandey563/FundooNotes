@@ -1,17 +1,19 @@
 <Solution>
-  <Folder Name="/src/" />
+  <Folder Name="/src/">
+    <Project Path="src/SharedLibrary/SharedLibrary.csproj" Id="484e327b-122f-45d2-8b6e-e5d0a84f212a" />
+  </Folder>
   <Folder Name="/src/Services/" />
   <Folder Name="/src/Services/CollaboratorService/">
-    <Project Path="CollaboratorService.API/CollaboratorService.API.csproj" Id="15dbea33-d723-498d-94f9-7edd8cb2c40b" />
-    <Project Path="CollaboratorService.Application/CollaboratorService.Application.csproj" Id="72cba6c8-3161-43c3-b2ff-0ed8ab9b895b" />
-    <Project Path="CollaboratorService.Domain/CollaboratorService.Domain.csproj" Id="f7e2fd97-1897-45ab-a07b-b2bd87a9f4f1" />
-    <Project Path="CollaboratorService.Infrastructure/CollaboratorService.Infrastructure.csproj" Id="378d76ab-c3ad-4d41-8e1a-4bf287091562" />
+    <Project Path="src/Services/CollaboratorService/CollaboratorService.API/CollaboratorService.API.csproj" />
+    <Project Path="src/Services/CollaboratorService/CollaboratorService.Application/CollaboratorService.Application.csproj" />
+    <Project Path="src/Services/CollaboratorService/CollaboratorService.Domain/CollaboratorService.Domain.csproj" />
+    <Project Path="src/Services/CollaboratorService/CollaboratorService.Infrastructure/CollaboratorService.Infrastructure.csproj" />
   </Folder>
-  <Folder Name="/src/Services/LabelService/">
-    <Project Path="src/Services/LabelService/LabelsService.API/LabelService.API.csproj" Id="aaa3c3c8-4106-41cb-92e3-69d539031a64" />
-    <Project Path="src/Services/LabelService/LabelsService.Application/LabelService.Application.csproj" Id="c6552d1f-2fa6-45ec-88fb-e3add498854f" />
-    <Project Path="src/Services/LabelService/LabelsService.Domain/LabelService.Domain.csproj" Id="ba6c3556-6505-4991-8dbb-0ef2a6603338" />
-    <Project Path="src/Services/LabelService/LabelsService.Infrastructure/LabelService.Infrastructure.csproj" Id="9a8646ee-c5f2-489f-91f1-74c0f6963ef0" />
+  <Folder Name="/src/Services/LabelsService/">
+    <Project Path="src/Services/LabelService/LabelsService.API/LabelService.API.csproj" />
+    <Project Path="src/Services/LabelService/LabelsService.Application/LabelService.Application.csproj" />
+    <Project Path="src/Services/LabelService/LabelsService.Domain/LabelService.Domain.csproj" />
+    <Project Path="src/Services/LabelService/LabelsService.Infrastructure/LabelService.Infrastructure.csproj" />
   </Folder>
   <Folder Name="/src/Services/NotesService/">
     <Project Path="src/Services/NotesService/NotesService.API/NotesService.API.csproj" />
@@ -20,9 +22,12 @@
     <Project Path="src/Services/NotesService/NotesService.Infrastructure/NotesService.Infrastructure.csproj" />
   </Folder>
   <Folder Name="/src/Services/UserService/">
-    <Project Path="UserService.API/UserService.API.csproj" Id="4ecb5742-d9bb-4152-ac45-1034d9cc200a" />
-    <Project Path="UserService.Application/UserService.Application.csproj" Id="9f02685a-7fcd-4113-a7a7-e5e7a62ae875" />
-    <Project Path="UserService.Domain/UserService.Domain.csproj" Id="4a56180b-d44b-4051-aac5-08a786f45f40" />
-    <Project Path="UserService.Infrastructure/UserService.Infrastructure.csproj" Id="d9167c50-ccd0-4b7f-a48b-ef5dbc7ccbb8" />
+    <Project Path="src/Services/UserService/UserService.API/UserService.API.csproj" />
+    <Project Path="src/Services/UserService/UserService.Application/UserService.Application.csproj" />
+    <Project Path="src/Services/UserService/UserService.Domain/UserService.Domain.csproj" />
+    <Project Path="src/Services/UserService/UserService.Infrastructure/UserService.Infrastructure.csproj" />
   </Folder>
+  <Properties Name="ExtensibilityGlobals" Scope="PostLoad">
+    <Property Name="FileExplorer" />
+  </Properties>
 </Solution>

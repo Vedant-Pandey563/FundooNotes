@@ -24,6 +24,7 @@
 		<ProjectReference Include="..\NotesService.Application\NotesService.Application.csproj" />
 		<ProjectReference Include="..\NotesService.Domain\NotesService.Domain.csproj" />
 		<ProjectReference Include="..\NotesService.Infrastructure\NotesService.Infrastructure.csproj" />
+		<ProjectReference Include="..\..\..\SharedLibrary\SharedLibrary.csproj" />
 	</ItemGroup>
 
 </Project>

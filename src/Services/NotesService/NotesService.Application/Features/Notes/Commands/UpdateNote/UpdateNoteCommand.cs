@@ -1,4 +1,6 @@
 ﻿using MediatR;
 using NotesService.Application.DTOs;
-
-public record UpdateNoteCommand(UpdateNoteDto Dto) : IRequest<bool>;
+namespace NotesService.Application.Features.Notes.Commands.UpdateNote
+{
+    public record UpdateNoteCommand(UpdateNoteDto Dto) : IRequest<bool>;
+}

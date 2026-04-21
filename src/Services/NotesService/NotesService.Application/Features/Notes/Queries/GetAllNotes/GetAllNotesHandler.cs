@@ -2,6 +2,8 @@
 using NotesService.Application.Interfaces;
 using NotesService.Application.DTOs;
 
+namespace NotesService.Application.Features.Notes.Queries.GetAllNotes
+{
 
 public class GetAllNotesHandler : IRequestHandler<GetAllNotesQuery, List<NoteResponseDto>>
 {
@@ -47,4 +49,5 @@ public class GetAllNotesHandler : IRequestHandler<GetAllNotesQuery, List<NoteRes
 
         return result;
     }
+}
 }

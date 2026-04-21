@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Connections;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using SharedLibrary.Infrastructure.GlobalException;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -83,6 +84,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
+
+app.UseGlobalExceptionMiddleware();
 
 app.UseSwagger();
 app.UseSwaggerUI();

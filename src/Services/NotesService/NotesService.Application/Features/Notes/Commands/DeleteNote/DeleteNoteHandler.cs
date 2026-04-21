@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using NotesService.Application.Interfaces;
 
+namespace NotesService.Application.Features.Notes.Commands.DeleteNote
+{
 public class DeleteNoteHandler : IRequestHandler<DeleteNoteCommand, bool>
 {
     private readonly INoteRepository _repo;
@@ -20,4 +22,5 @@ public class DeleteNoteHandler : IRequestHandler<DeleteNoteCommand, bool>
 
         return true;
     }
+}
 }

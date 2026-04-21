@@ -10,6 +10,7 @@ using NotesService.Infrastructure.Persistence;
 using NotesService.Infrastructure.Repositories;
 using NotesService.Infrastructure.Cache;
 using System.Text;
+using SharedLibrary.Infrastructure.GlobalException;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -94,6 +95,8 @@ builder.Services.AddSingleton<ICacheService>(new RedisService(redisConnection));
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
+
+app.UseGlobalExceptionMiddleware();
 
 app.UseSwagger();
 app.UseSwaggerUI();
