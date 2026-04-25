@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 
 namespace UserService.Application.Features.Auth.Commands.Login
 {
+    // Defines handler for LoginCommand
+    // IRequestHandler<TRequest, TResponse> → TRequest = LoginCommand , → TResponse = AuthResponseDto?
     public class LoginHandler : IRequestHandler<LoginCommand, AuthResponseDto?>
     {
         private readonly IUserRepository _repo;

@@ -24,30 +24,30 @@ builder.Services.AddSwaggerGen(c =>
         Version = "v1"
     });
 
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Name = "Authorization",
-        Type = SecuritySchemeType.Http,
-        Scheme = "bearer",
-        BearerFormat = "JWT",
-        In = ParameterLocation.Header,
-        Description = "Enter your JWT token here"
-    });
+    //c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    //{
+    //    Name = "Authorization",
+    //    Type = SecuritySchemeType.Http,
+    //    Scheme = "bearer",
+    //    BearerFormat = "JWT",
+    //    In = ParameterLocation.Header,
+    //    Description = "Enter your JWT token here"
+    //});
 
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            Array.Empty<string>()
-        }
-    });
+    //c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    //{
+    //    {
+    //        new OpenApiSecurityScheme
+    //        {
+    //            Reference = new OpenApiReference
+    //            {
+    //                Type = ReferenceType.SecurityScheme,
+    //                Id = "Bearer"
+    //            }
+    //        },
+    //        Array.Empty<string>()
+    //    }
+    //});
 });
 
 // MediatR
@@ -61,30 +61,30 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddSingleton(new DbConnectionFactory(connectionString));
 builder.Services.AddScoped<ICollaboratorRepository, CollaboratorRepository>();
 
-// JWT auth
-var secret = builder.Configuration["JwtSettings:Secret"]
-    ?? throw new InvalidOperationException("JwtSettings:Secret is missing.");
+//// JWT auth
+//var secret = builder.Configuration["JwtSettings:Secret"]
+//    ?? throw new InvalidOperationException("JwtSettings:Secret is missing.");
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+//    .AddJwtBearer(options =>
+//    {
+//        options.TokenValidationParameters = new TokenValidationParameters
+//        {
+//            ValidateIssuer = true,
+//            ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
 
-            ValidateAudience = true,
-            ValidAudience = builder.Configuration["JwtSettings:Audience"],
+//            ValidateAudience = true,
+//            ValidAudience = builder.Configuration["JwtSettings:Audience"],
 
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
+//            ValidateLifetime = true,
+//            ValidateIssuerSigningKey = true,
 
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret)),
-            ClockSkew = TimeSpan.Zero
-        };
-    });
+//            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret)),
+//            ClockSkew = TimeSpan.Zero
+//        };
+//    });
 
-builder.Services.AddAuthorization();
+//builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -95,7 +95,7 @@ app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication();   // CHANGE: must come before authorization
+//app.UseAuthentication();   // CHANGE: must come before authorization
 app.UseAuthorization();
 
 app.MapControllers();

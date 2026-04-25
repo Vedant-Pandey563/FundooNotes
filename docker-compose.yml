@@ -1,0 +1,36 @@
+services:
+
+  userservice:
+    build:
+      context: .
+      dockerfile: src/Services/UserService/UserService.API/Dockerfile
+    ports:
+      - "7241:8080"
+
+  noteservice:
+    build:
+      context: .
+      dockerfile: src/Services/NotesService/NotesService.API/Dockerfile
+    ports:
+      - "7247:8080"
+
+  labelservice:
+    build:
+      context: .
+      dockerfile: src/Services/LabelService/LabelsService.API/Dockerfile
+    ports:
+      - "7179:8080"
+
+  collaboratorservice:
+    build:
+      context: .
+      dockerfile: src/Services/CollaboratorService/CollaboratorService.API/Dockerfile
+    ports:
+      - "7212:8080"
+
+  ocelotgateway:
+    build:
+      context: .
+      dockerfile: src/OcelotGateway/Dockerfile
+    ports:
+      - "7293:8080"

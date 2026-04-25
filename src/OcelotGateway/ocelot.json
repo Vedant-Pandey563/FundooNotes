@@ -1,0 +1,74 @@
+{
+  "Routes": [
+
+    // ================= AUTH SERVICE =================
+    {
+      "DownstreamPathTemplate": "/api/Auth/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "userservice",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/auth/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+
+    // ================= NOTES SERVICE =================
+    {
+      "DownstreamPathTemplate": "/api/Notes/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "noteservice",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/notes/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
+    },
+
+    // ================= LABEL SERVICE =================
+    {
+      "DownstreamPathTemplate": "/api/Labels/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "labelservice",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/labels/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
+    },
+
+    // ================= COLLABORATOR SERVICE =================
+    {
+      "DownstreamPathTemplate": "/api/Collaborator/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "collaboratorservice",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/collaborator/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
+    }
+
+  ],
+
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:7293"
+  }
+}

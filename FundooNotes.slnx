@@ -2,6 +2,9 @@
   <Folder Name="/src/">
     <Project Path="src/SharedLibrary/SharedLibrary.csproj" Id="484e327b-122f-45d2-8b6e-e5d0a84f212a" />
   </Folder>
+  <Folder Name="/src/APIGateway/">
+    <Project Path="src/OcelotGateway/OcelotGateway.csproj" Id="b62d140c-2ea6-4e52-81a0-1aa7a8d1cbcc" />
+  </Folder>
   <Folder Name="/src/Services/" />
   <Folder Name="/src/Services/CollaboratorService/">
     <Project Path="src/Services/CollaboratorService/CollaboratorService.API/CollaboratorService.API.csproj" />
