@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CollaboratorService.Domain.Entites
 {
-    // Pure domain model
+    // Domain entity for a collaborator entry.
+    // CreatedAt is initialized here so inserts never send DateTime.MinValue to SQL.
     public class Collaborator
     {
         public int Id { get; set; }
@@ -17,6 +14,8 @@ namespace CollaboratorService.Domain.Entites
 
         public int CollaboratorUserId { get; set; }
 
-        public DateTime CreatedAt { get; set; }
+        // SQL Server DATETIME cannot store DateTime.MinValue.
+        // UtcNow is safe and consistent for audit fields.
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }

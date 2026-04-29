@@ -6,7 +6,6 @@ using UserService.Application.DTOs;
 using UserService.Application.Features.Auth.Commands.Login;
 using UserService.Application.Features.Auth.Commands.Register;
 
-
 namespace UserService.API.Controllers
 {
     [ApiController]
@@ -15,42 +14,49 @@ namespace UserService.API.Controllers
     {
         private readonly IMediator _mediator;
 
-        //Mediatr inject
+        // IMediator is injected so the controller stays thin
+        // and all business logic remains in handlers.
         public AuthController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
         [AllowAnonymous]
-        //register new user
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto dto)
         {
-            var result = await _mediator.Send(new RegisterCommand(dto));
+            var created = await _mediator.Send(new RegisterCommand(dto));
 
-            return Ok(new
+            // If the handler returns false, the email already exists.
+            if (!created)
+            {
+                return Conflict(new
                 {
-                    Message = "User successfull registerd"
+                    Message = "A user with this email already exists."
+                });
+            }
+
+            return StatusCode(StatusCodes.Status201Created, new
+            {
+                Message = "User registered successfully."
             });
         }
 
-
-        //login new user
         [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto dto)
         {
             var result = await _mediator.Send(new LoginCommand(dto));
 
-            if(result == null)
+            if (result == null)
             {
-                return Unauthorized("Invalid email or password");
+                return Unauthorized("Invalid email or password.");
             }
 
             return Ok(result);
         }
 
-        [Authorize]  
+        [Authorize]
         [HttpGet("me")]
         public IActionResult Me()
         {

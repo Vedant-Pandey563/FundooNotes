@@ -2,12 +2,22 @@
   <Folder Name="/src/">
     <Project Path="src/SharedLibrary/SharedLibrary.csproj" Id="484e327b-122f-45d2-8b6e-e5d0a84f212a" />
   </Folder>
-  <Folder Name="/src/Services/" />
+  <Folder Name="/src/dapr/" />
+  <Folder Name="/src/dapr/components/">
+    <File Path="src/dapr/components/pubsub.yaml" />
+    <File Path="src/dapr/components/statestore.yaml" />
+  </Folder>
+  <Folder Name="/src/Services/">
+    <Project Path="src/OcelotGateway/OcelotGateway.csproj" />
+  </Folder>
   <Folder Name="/src/Services/CollaboratorService/">
     <Project Path="src/Services/CollaboratorService/CollaboratorService.API/CollaboratorService.API.csproj" />
     <Project Path="src/Services/CollaboratorService/CollaboratorService.Application/CollaboratorService.Application.csproj" />
     <Project Path="src/Services/CollaboratorService/CollaboratorService.Domain/CollaboratorService.Domain.csproj" />
     <Project Path="src/Services/CollaboratorService/CollaboratorService.Infrastructure/CollaboratorService.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/EmailService/">
+    <Project Path="src/Services/EmailService/EmailService.API/EmailService.API.csproj" />
   </Folder>
   <Folder Name="/src/Services/LabelsService/">
     <Project Path="src/Services/LabelService/LabelsService.API/LabelService.API.csproj" />
@@ -28,7 +38,4 @@
     <Project Path="src/Services/UserService/UserService.Infrastructure/UserService.Infrastructure.csproj" />
   </Folder>
   <Project Path="FundooNotes.Test/FundooNotes.Test.csproj" Id="2a20f59c-2532-4e6b-ab63-55078c62d73a" />
-  <Properties Name="ExtensibilityGlobals" Scope="PostLoad">
-    <Property Name="FileExplorer" />
-  </Properties>
 </Solution>

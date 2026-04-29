@@ -11,6 +11,7 @@ using NotesService.Infrastructure.Repositories;
 using NotesService.Infrastructure.Cache;
 using System.Text;
 using SharedLibrary.Infrastructure.GlobalException;
+using Dapr.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -87,10 +88,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-//redis 
-var redisConnection = builder.Configuration["RedisSettings:ConnectionString"]
-    ?? throw new InvalidOperationException("RedisSettings:ConnectionString is missing.");
-builder.Services.AddSingleton<ICacheService>(new RedisService(redisConnection));
+// Dapr state store cache.
+// IMPORTANT: this requires the service to run with a Dapr sidecar.
+builder.Services.AddDaprClient();
+builder.Services.AddScoped<ICacheService, DaprCacheService>();
 
 builder.Services.AddAuthorization();
 

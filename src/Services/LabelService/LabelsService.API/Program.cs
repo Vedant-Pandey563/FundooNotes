@@ -1,21 +1,21 @@
 using LabelService.Application.Features.Label.Commands.CreateLabel;
 using LabelService.Application.Interfaces;
-using LabelService.Application.Features.Label.Commands.CreateLabel;
-using LabelService.Application.Interfaces;
 using LabelService.Infrastructure.Persistence;
 using LabelService.Infrastructure.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Connections;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Text;
 using SharedLibrary.Infrastructure.GlobalException;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+
+// Required for the HttpClientFactory used by the service invocation endpoint.
+builder.Services.AddHttpClient();
 
 builder.Services.AddSwaggerGen(c =>
 {

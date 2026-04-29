@@ -23,13 +23,13 @@ public class GetAllNotesHandler : IRequestHandler<GetAllNotesQuery, List<NoteRes
         //  Try cache first
         var cached = await _cache.GetAsync<List<NoteResponseDto>>(cacheKey);
 
-        if (cached != null)
-        {
-            Console.WriteLine($"Cache hit: {cacheKey}");
-            return cached;
-        }
+            if (cached != null && cached.Count > 0)
+            {
+                Console.WriteLine($"Cache hit: {cacheKey}");
+                return cached;
+            }
 
-        Console.WriteLine($"Cache miss: {cacheKey}");
+            Console.WriteLine($"Cache miss: {cacheKey}");
 
         var notes = await _repo.GetByUserIdAsync(request.UserId);
 
@@ -37,7 +37,7 @@ public class GetAllNotesHandler : IRequestHandler<GetAllNotesQuery, List<NoteRes
             n.Id,
             n.Title,
             n.Description,
-            n.Color,
+            n.Color ?? "white",
             n.IsPinned,
             n.IsArchived,
             n.IsTrashed

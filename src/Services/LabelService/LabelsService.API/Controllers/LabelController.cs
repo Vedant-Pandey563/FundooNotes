@@ -10,7 +10,8 @@ using LabelService.Application.Features.Label.Queries.GetLabelByNoteId;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using System.Net.Http.Headers;
+using System.Net.Http.Json;
 
 namespace LabelService.API.Controllers
 {
@@ -20,10 +21,12 @@ namespace LabelService.API.Controllers
     public class LabelsController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public LabelsController(IMediator mediator)
+        public LabelsController(IMediator mediator, IHttpClientFactory httpClientFactory)
         {
             _mediator = mediator;
+            _httpClientFactory = httpClientFactory;
         }
 
         private int GetOwnerUserId()
@@ -113,6 +116,55 @@ namespace LabelService.API.Controllers
                 return NotFound();
 
             return Ok("Label removed from note");
+        }
+
+        // Service invocation: LabelService -> NotesService through this service's own Dapr sidecar.
+        // Also forwards the user's Authorization header so NotesService [Authorize] can accept it.
+        [HttpGet("{labelId}/notes")]
+        public async Task<IActionResult> GetNotesByLabel(int labelId)
+        {
+            var authHeader = Request.Headers.Authorization.ToString();
+            if (string.IsNullOrWhiteSpace(authHeader))
+                return Unauthorized("Missing Authorization header.");
+
+            // IMPORTANT:
+            // Use THIS service's Dapr sidecar port, not NotesService's port.
+            // DAPR_HTTP_PORT is set automatically when the app is started with `dapr run`.
+            var daprHttpPort = Environment.GetEnvironmentVariable("DAPR_HTTP_PORT");
+            if (string.IsNullOrWhiteSpace(daprHttpPort))
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    Message = "DAPR_HTTP_PORT is not available. Start LabelService with 'dapr run'."
+                });
+
+            var client = _httpClientFactory.CreateClient();
+
+            var url = $"http://localhost:{daprHttpPort}/v1.0/invoke/notes-service/method/api/Notes/by-label/{labelId}";
+
+            try
+            {
+                using var request = new HttpRequestMessage(HttpMethod.Get, url);
+                request.Headers.TryAddWithoutValidation("Authorization", authHeader);
+
+                var response = await client.SendAsync(request);
+                var body = await response.Content.ReadAsStringAsync();
+
+                // Pass through the downstream status code and payload.
+                return new ContentResult
+                {
+                    StatusCode = (int)response.StatusCode,
+                    Content = body,
+                    ContentType = response.Content.Headers.ContentType?.ToString() ?? "application/json"
+                };
+            }
+            catch (HttpRequestException ex)
+            {
+                return StatusCode(StatusCodes.Status502BadGateway, new
+                {
+                    Message = "Dapr sidecar is not reachable.",
+                    Details = ex.Message
+                });
+            }
         }
     }
 }

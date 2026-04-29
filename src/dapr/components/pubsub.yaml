@@ -1,0 +1,11 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: pubsub
+spec:
+  type: pubsub.rabbitmq
+  version: v1
+  metadata:
+    # Use IPv4 loopback explicitly so Windows does not resolve localhost to ::1.
+    - name: connectionString
+      value: "amqp://guest:guest@127.0.0.1:5672"

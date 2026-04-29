@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using NotesService.Application.Features.Notes.Commands.DeleteNote;
 using NotesService.Application.Features.Notes.Commands.UpdateNote;
 using NotesService.Application.Features.Notes.Queries.GetAllNotes;
+using NotesService.Application.Features.Notes.Queries.GetNotesByLabel;
 
 namespace NotesService.API.Controllers
 {
@@ -87,6 +88,26 @@ namespace NotesService.API.Controllers
             if (!result) return NotFound();
 
             return Ok("Deleted successfully");
+        }
+
+        // get by labelid
+        [HttpGet("by-label/{labelId}")]
+        public async Task<IActionResult> GetNotesByLabel(int labelId)
+        {
+            var notes = await _mediator.Send(new GetNotesByLabelQuery(labelId));
+            return Ok(notes);
+        }
+
+        // post note and label id
+        [HttpPost("{noteId}/labels/{labelId}")]
+        public async Task<IActionResult> AddLabel(string noteId, int labelId)
+        {
+            var result = await _mediator.Send(new AddLabelToNoteCommand(noteId, labelId));
+
+            if (!result)
+                return NotFound();
+
+            return Ok("Label added to note");
         }
     }
 }

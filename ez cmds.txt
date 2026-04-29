@@ -1,0 +1,9 @@
+dotnet run
+
+dapr run --app-id collaborator-service --app-port 5159 --dapr-http-port 3502 --resources-path ../../../dapr/components dotnet runcls
+
+dapr run --app-id notes-service --app-port 5085 --dapr-http-port 3500 --resources-path ../../../dapr/components dotnet run
+
+dapr run --app-id label-service --app-port 5075 --dapr-http-port 3501 --resources-path ../../../dapr/components dotnet run
+
+dapr run --app-id email-service --app-port 5005 --dapr-http-port 3503 --resources-path ../../../dapr/components dotnet run

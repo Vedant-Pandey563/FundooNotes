@@ -26,7 +26,8 @@ namespace NotesService.Domain.Entities
         public bool IsArchived { get; set; } = false;
         public bool IsTrashed { get; set; } = false;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public DateTime? UpdatedAt {  get; set; } 
+        public DateTime? UpdatedAt {  get; set; }
+        public List<int> LabelIds { get; set; } = new();
 
     }
 }

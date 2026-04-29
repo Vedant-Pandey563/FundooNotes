@@ -6,8 +6,16 @@ namespace NotesService.Application.DTOs
 {
     //record for note creation
     //record better for data storage , immutable and easy obj compare
-    public record CreateNoteDto(
-        string Title,
-        string Description,
-        string? Color);
+    // Record with init-only properties (clean + flexible)
+    public record CreateNoteDto
+    {
+        public string Title { get; init; } = string.Empty;
+
+        public string Description { get; init; } = string.Empty;
+
+        public List<int>? LabelIds { get; init; } // optional
+
+        public string? Color { get; init; }
+    }
+
 }

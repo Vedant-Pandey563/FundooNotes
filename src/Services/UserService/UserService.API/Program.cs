@@ -6,6 +6,7 @@ using Microsoft.OpenApi.Models;
 using UserService.Application.Features.Auth.Commands.Login;
 using UserService.Application.Features.Auth.Commands.Register;
 using UserService.Application.Interfaces;
+using UserService.Infrastructure.Messaging;
 using UserService.Infrastructure.Persistence;
 using UserService.Infrastructure.Repositories;
 using SharedLibrary.Infrastructure.GlobalException;
@@ -57,6 +58,9 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddSingleton(new DbConnectionFactory(connectionString));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+// Register RabbitMQ publisher for event emission after registration.
+builder.Services.AddSingleton<IMessagePublisher, RabbitMQPublisher>();
 
 var secret = builder.Configuration["JwtSettings:Secret"]
     ?? throw new InvalidOperationException("JwtSettings:Secret is missing.");

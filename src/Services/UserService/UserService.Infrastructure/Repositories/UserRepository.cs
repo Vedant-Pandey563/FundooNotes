@@ -1,45 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Dapper;
-using MongoDB.Driver;
+﻿using Dapper;
 using UserService.Application.Interfaces;
 using UserService.Domain.Entities;
 using UserService.Infrastructure.Persistence;
 
 namespace UserService.Infrastructure.Repositories
 {
-    //Implement IuserRepo from Application layer
+    // Infrastructure implementation of the user repository.
+    // This class owns all SQL access for the UserService.
     public class UserRepository : IUserRepository
     {
         private readonly DbConnectionFactory _factory;
 
         public UserRepository(DbConnectionFactory factory)
         {
-            _factory=factory;
+            _factory = factory;
         }
 
-        //create new user
+        // Insert a new user into the Users table.
         public async Task CreateAsync(User user)
         {
-            var query = @"
-                        Insert Into Users(FirstName,LastName,Email,PasswordHash)
-                        Values(@FirstName,@LastName,@Email,@PasswordHash)";
+            const string query = @"
+                INSERT INTO Users (FirstName, LastName, Email, PasswordHash)
+                VALUES (@FirstName, @LastName, @Email, @PasswordHash);";
 
             using var connection = _factory.CreateConnection();
-
             await connection.ExecuteAsync(query, user);
         }
-        //find user by email
+
+        // Fetch a single user by email.
         public async Task<User?> GetByEmailAsync(string email)
         {
-            var query = @"
-                        Select * from Users Where Email = @Email";
+            const string query = @"
+                SELECT TOP 1 *
+                FROM Users
+                WHERE Email = @Email;";
 
             using var connection = _factory.CreateConnection();
-
             return await connection.QueryFirstOrDefaultAsync<User>(query, new { Email = email });
         }
     }

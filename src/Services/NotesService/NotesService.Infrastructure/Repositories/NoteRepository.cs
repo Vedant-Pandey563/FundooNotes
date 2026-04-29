@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using NotesService.Application.Interfaces;
 using NotesService.Domain.Entities;
 using NotesService.Infrastructure.Persistence;
 
 namespace NotesService.Infrastructure.Repositories
 {
-    // Implements Application layer interface
     public class NoteRepository : INoteRepository
     {
         private readonly IMongoCollection<Note> _notes;
@@ -19,13 +15,9 @@ namespace NotesService.Infrastructure.Repositories
         }
 
         // Create a new note
-
         public async Task<string> CreateAsync(Note note)
         {
             await _notes.InsertOneAsync(note);
-
-            // Mongo uses ObjectId normally, but since we used int,
-            // you may later replace with string Id (recommended)
             return note.Id;
         }
 
@@ -33,7 +25,7 @@ namespace NotesService.Infrastructure.Repositories
         public async Task<List<Note>> GetByUserIdAsync(int userId)
         {
             return await _notes
-                .Find(n => (n.UserId) == userId)
+                .Find(n => n.UserId == userId)
                 .ToListAsync();
         }
 
@@ -55,6 +47,14 @@ namespace NotesService.Infrastructure.Repositories
         public async Task DeleteAsync(string id)
         {
             await _notes.DeleteOneAsync(n => n.Id == id);
+        }
+
+        // NEW: Get notes by label ID
+        public async Task<List<Note>> GetByLabelIdAsync(int labelId)
+        {
+            return await _notes
+                .Find(n => n.LabelIds != null && n.LabelIds.Contains(labelId))
+                .ToListAsync();
         }
     }
 }

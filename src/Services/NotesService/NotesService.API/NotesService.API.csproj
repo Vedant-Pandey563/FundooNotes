@@ -8,6 +8,7 @@
 
 	<ItemGroup>
 		<!-- MediatR -->
+		<PackageReference Include="Dapr.AspNetCore" Version="1.17.9" />
 		<PackageReference Include="MediatR" Version="14.1.0" />
 
 		<!-- JWT Authentication -->

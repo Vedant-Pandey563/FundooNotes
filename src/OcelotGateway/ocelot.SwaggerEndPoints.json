@@ -1,0 +1,44 @@
+{
+  "SwaggerEndPoints": [
+    {
+      "Key": "auth",
+      "Config": [
+        {
+          "Name": "Auth Service",
+          "Version": "v1",
+          "Url": "http://localhost:5095/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "notes",
+      "Config": [
+        {
+          "Name": "Notes Service",
+          "Version": "v1",
+          "Url": "http://localhost:5085/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "labels",
+      "Config": [
+        {
+          "Name": "Label Service",
+          "Version": "v1",
+          "Url": "http://localhost:5075/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "collaborator",
+      "Config": [
+        {
+          "Name": "Collaborator Service",
+          "Version": "v1",
+          "Url": "http://localhost:5159/swagger/v1/swagger.json"
+        }
+      ]
+    }
+  ]
+}

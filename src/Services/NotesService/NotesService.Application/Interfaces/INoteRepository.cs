@@ -12,5 +12,6 @@ namespace NotesService.Application.Interfaces
         Task<Note?> GetByIdAsync(string id);
         Task UpdateAsync(Note note);
         Task DeleteAsync(string id);
+        Task<List<Note>> GetByLabelIdAsync(int labelId);
     }
 }
